@@ -7,7 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository8069_latest.zip -d $HOME/android-sdk/cmdline-tools
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Android SDK
+      run: |
+        mkdir -p $HOME/android-sdk/cmdline-tools
+        curl -o $HOME/android-sdk/cmdline-tools/tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
+        unzip $HOME/android-sdk/cmdline-tools/tools.zip -d $HOME/android-sdk/cmdline-tools
         export ANDROID_HOME=$HOME/android-sdk
         export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
         yes | sdkmanager --licenses
@@ -23,7 +30,7 @@ jobs:
       run: |
         curl -o resources/android_developer_guide.html https://developer.android.com/guide
 
-    - name
+    - name: Download Additional Resources
       run: |
         curl -o resources/android_ui.html https://developer.android.com/guide/topics/ui
         curl -o resources/retrofit.html https://square.github.io/retrofit/
